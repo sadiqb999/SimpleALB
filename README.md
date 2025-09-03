@@ -1,11 +1,11 @@
 # SimpleALB
-Launching an ALB in AWS with simple EC2 User Script
+Launching an Application Load Balancer in AWS with simple EC2 User Script
 
 # Steps to Launch EC2 Instances
 1. Select AMI: Amazon Linux
 2. Instance type: t3.micro (Free-tier)
 3. Key pair not needed for simplicity although advised
-4. Security group: Allow inbound traffic from SSH and HTTP
+4. Security group: Allow inbound traffic from SSH and HTTP (Lets say the name of this sg is "demo-sg-ec2")
 5. Under **Advanced Details**, copy and paste the script from ['ec2-user-script.sh'](./ec2-user-script.sh) into **User Data**
 6. Launch 2 Instances
 
@@ -15,5 +15,10 @@ Now test if the EC2s are running. Search **http://{public-ipv4-address-of-the-in
 1. Scheme: Internet-facing
 2. Load balancer IP: IPv4
 3. Network mapping: Select all AZs
-4. Add new security group only allowing HTTP inbound traffic and all outbound traffic
+4. Add new security group only allowing HTTP inbound traffic and all outbound traffic (Name of sg is "demo-sg-alb")
 5. Target group: The two EC2 instances created
+
+# For Improved Security
+1. Delete inbound HTTP traffic from demo-sg-ec2 and add HTTP traffic from demo-sg-alb
+
+Now you can access the EC2 via the DNS name of the load balancer
